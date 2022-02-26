@@ -1,0 +1,1 @@
+# wipeout-buffers.nvim
