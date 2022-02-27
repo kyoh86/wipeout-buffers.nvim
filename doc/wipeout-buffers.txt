@@ -1,0 +1,94 @@
+*wipeout-buffers.txt*                     A plugin to enhance to close buffers
+
+Author: kyoh86 <me@kyoh86.dev>
+License: MIT license
+
+===============================================================================
+CONTENTS                                            *wipeout-buffers-contents*
+
+USAGE                                               |wipeout-buffers-usage|
+  FUNCTIONS                                         |wipeout-buffers-function|
+  COMMANDS                                          |wipeout-buffers-command|
+  VARIABLES                                         |wipeout-buffers-variable|
+
+===============================================================================
+USAGE                                                  *wipeout-buffers-usage*
+
+*wipeout-buffers* provides functions to close buffers. Example: >
+    require("wipeout").menu({force = true})
+<
+
+-------------------------------------------------------------------------------
+FUNCTIONS                                           *wipeout-buffers-function*
+
+                                         *wipeout-params* *wipeout-parameters*
+
+Some functions receives a |Dictionary| has keys below.
+
+- `force`
+    A |Boolean| flag to wipe forcely the buffers which has changed.
+    Default: false
+
+- `keep_layout`
+    A |Boolean| flag to preserve window layout.
+    Default: false
+
+- `filter`
+    A |function| to filter buffers.
+    It receives a buffer object (see |getbufinfo()|) and return true if the
+    buffer should be wiped.
+    Default: nil (no buffer will be filtered out)
+
+- `debug`
+    UNIMPLEMENTED.
+    A |Boolean| flag to show log verbosely for debugging.
+
+                                                            *wipeout.select()*
+wipeout.select({params})
+
+    Lets you interactively select which buffers to wipe.
+
+                                                              *wipeout.menu()*
+wipeout.menu({params})
+
+    Open a menu to choose one of behaviors below.
+
+                                                           *wipeout.current()*
+wipeout.current({params})
+
+    Wipe a buffer in the current window.
+
+                                                             *wipeout.other()*
+wipeout.other({params})
+
+    Wipe buffers other of the one in the current window.
+
+                                                            *wipeout.hidden()*
+wipeout.hidden({params})
+
+    Wipe buffers loaded but currently not displayed in any window.
+    See |hidden-buffer| for details.
+
+                                                          *wipeout.nameless()*
+wipeout.nameless({params})
+
+    Wipe buffers having no name.
+
+                                                               *wipeout.all()*
+wipeout.all({params})
+
+    Wipe all buffers.
+
+
+-------------------------------------------------------------------------------
+COMMANDS                                             *wipeout-buffers-command*
+
+THIS PLUGIN NEVER DEFINES ANY COMMANDS.
+
+
+-------------------------------------------------------------------------------
+VARIABLE                                            *wipeout-buffers-variable*
+
+TODO (NOT DOCUMENTED YET)
+
+vim:filetype=help
