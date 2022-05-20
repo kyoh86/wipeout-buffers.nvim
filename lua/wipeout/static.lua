@@ -3,6 +3,8 @@ local core = require("wipeout.core")
 
 local M = {}
 
+--- Wipe buffers other of the one in the current window.
+---@param params wipeout.Params
 function M.other(params)
     local current = buffer.current_number()
     core.filtered(params, {
@@ -12,6 +14,8 @@ function M.other(params)
     })
 end
 
+--- Wipe buffers loaded but currently not displayed in any window.
+---@param params wipeout.Params
 function M.hidden(params)
     core.filtered(params, {
         function(item)
@@ -20,6 +24,8 @@ function M.hidden(params)
     })
 end
 
+--- Wipe buffers having no name.
+---@param params wipeout.Params
 function M.nameless(params)
     core.filtered(params, {
         function(item)
@@ -28,10 +34,14 @@ function M.nameless(params)
     })
 end
 
+--- Wipe all buffers.
+---@param params wipeout.Params
 function M.all(params)
     core.filtered(params)
 end
 
+--- Wipe a buffer in the current window.
+---@param params wipeout.Params
 function M.current(params)
     core.one(params, buffer.current())
 end

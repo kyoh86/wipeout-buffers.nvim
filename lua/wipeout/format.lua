@@ -2,6 +2,9 @@ local buffer = require("wipeout.buffer")
 
 local M = {}
 
+--- Get a activity flag representation from the BufInfo
+---@param bufinfo wipeout.BufInfo
+---@return string
 function M.active_flag(bufinfo)
     if bufinfo.loaded ~= 0 and not vim.tbl_isempty(bufinfo.windows) then
         return "a"
@@ -10,6 +13,9 @@ function M.active_flag(bufinfo)
     end
 end
 
+--- Get a readonly flag representation from the BufInfo
+---@param bufinfo wipeout.BufInfo
+---@return string
 function M.readonly_flag(bufinfo)
     if not vim.api.nvim_buf_get_option(bufinfo.bufnr, "modifiable") then
         return "-"
@@ -19,6 +25,9 @@ function M.readonly_flag(bufinfo)
     return " "
 end
 
+--- Get a modified flag representation from the BufInfo
+---@param bufinfo wipeout.BufInfo
+---@return string
 function M.modified_flag(bufinfo)
     if bufinfo.changed ~= 0 then
         return "+"
@@ -26,6 +35,9 @@ function M.modified_flag(bufinfo)
     return " "
 end
 
+--- Get a name of the BufInfo
+---@param bufinfo wipeout.BufInfo
+---@return string
 function M.name(bufinfo)
     if bufinfo.name == "" then
         return ""
@@ -36,9 +48,12 @@ function M.name(bufinfo)
     return bufinfo.name
 end
 
-function M.get_formatter(params)
+--- Get a formatter to represents BufInfo
+---@return fun(bufinfo: wipeout.BufInfo): string
+function M.get_formatter()
     local cur_bufnr = buffer.current_number()
     local alt_bufnr = buffer.alternate_number()
+    ---@param bufinfo wipeout.BufInfo
     return function(bufinfo)
         local cursor_flag = " "
         if bufinfo.bufnr == cur_bufnr then

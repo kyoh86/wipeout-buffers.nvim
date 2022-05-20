@@ -1,7 +1,17 @@
 local buffer = require("wipeout.buffer")
 
+---@alias wipeout.BufInfo {bufnr: number, changed: boolean, changedtick: number, hidden: boolean, lastused: number, listed: boolean, lnum: number,linecount: number, loaded: boolean, name: string, variables: table, windows: number[]}
+---@see getbufinfo()
+
+---@alias wipeout.Filter fun(wipeout.BufInfo): boolean
+---@alias wipeout.Params {force: boolean, keep_layout: boolean, filter: wipeout.Filter, debug: boolean}
+---@alias wipeout.OptionalParams {force: boolean?, keep_layout: boolean?, filter: wipeout.Filter?, debug: boolean?}
+
 local M = {}
 
+--- Set buffer to windows.
+---@param windows window[]
+---@param bufnr buffer
 local function wins_set_buf(windows, bufnr)
     for _, window in pairs(windows) do
         if bufnr < 0 then
@@ -11,6 +21,9 @@ local function wins_set_buf(windows, bufnr)
     end
 end
 
+--- Get alternative buffer for the bufinfo
+---@param bufinfo wipeout.BufInfo
+---@return buffer
 local function get_alt_buffer(bufinfo)
     local candidate, found = -1, false
     for _, bi in ipairs(buffer.all()) do
@@ -27,6 +40,9 @@ local function get_alt_buffer(bufinfo)
     return candidate
 end
 
+--- Wipeout buffers matched for filters.
+---@param params wipeout.Params
+---@param filters wipeout.Filter[]?
 function M.filtered(params, filters)
     local filter = buffer.build_filter(params, filters)
     local dels, rews, alter = {}, {}, -1
@@ -55,6 +71,9 @@ function M.filtered(params, filters)
     end
 end
 
+--- Wipeout one buffer
+---@param params wipeout.Params
+---@param bufinfo wipeout.BufInfo
 function M.one(params, bufinfo)
     if params.keep_layout then
         wins_set_buf(bufinfo.windows, get_alt_buffer(bufinfo))

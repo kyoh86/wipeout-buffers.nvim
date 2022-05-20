@@ -60,7 +60,6 @@ describe("Format", function()
 
     it("name (normal buffer)", function()
         local bufnr = vim.fn.bufnr("%")
-        local name = vim.env.HOME .. "/foo"
         vim.api.nvim_buf_set_name(bufnr, vim.env.HOME .. "/foo")
 
         local info = vim.fn.getbufinfo("%")[1]
